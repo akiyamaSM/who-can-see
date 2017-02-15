@@ -6,7 +6,7 @@ require_once 'HideFilter.php';
 final class FilterRepository
 {
     private function __construct(){}
-    
+
     public static function generate($type)
     {
         if($type == RoleManager::TYPE_ONLY){

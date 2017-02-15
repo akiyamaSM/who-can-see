@@ -10,6 +10,9 @@
  */
 
 require_once 'RoleManager.php';
+require_once 'editor/ButtonCreator.php';
+
+(new ButtonCreator())->run();
 
 add_shortcode('whocansee', function ($attributes, $content )
 {
