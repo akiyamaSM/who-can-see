@@ -1,13 +1,17 @@
 <?php
 
-require_once 'VisitorFilter.php';
+require_once 'ShowFilter.php';
+require_once 'HideFilter.php';
 
 final class FilterRepository
 {
-    public static function generate($type, $affected)
+    public static function generate($type)
     {
-        if($affected == 'visitor'){
-            return new VisitorFilter($type);
+        if($type == RoleManager::TYPE_ONLY){
+            return new ShowFilter();
+        }
+        if($type == RoleManager::TYPE_EXCEPT){
+            return new HideFilter();
         }
     }
 }

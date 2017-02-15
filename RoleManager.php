@@ -35,8 +35,7 @@ class RoleManager
             return null;
             //return [static::TYPE_NOT_VALID, null];
         }
-        //[whocansee only=""][/whocansse]
-        $type = static::getType(array_keys($attribute)[0]); // Get the type of operation
+        $type = static::getType(array_keys($attribute)[0]);
         return static::getAffected($type, array_values($attribute)[0]);
     }
 
@@ -78,7 +77,15 @@ class RoleManager
         if($type === static::TYPE_ALL || $type === static::TYPE_NONE){
             return null;
         }
-        return FilterRepository::generate($type, $affected);
+        list($affectedArray, $selected)= [explode('|', $affected), []];
+
+        $filter = FilterRepository::generate($type);
+        foreach($affectedArray as $role){
+            if(in_array($role, static::$ROLES)){
+                $selected[] = $role;
+            }
+        }
+        return $filter->select($selected);
     }
 
     /**

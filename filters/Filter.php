@@ -1,7 +1,19 @@
 <?php
 
 
-interface Filter
+abstract class Filter
 {
-    public function apply($content);
+    protected $affected = [];
+
+    /**
+     * Select the roles that will be used
+     *
+     * @param $affected
+     * @return $this
+     */
+    public function select($affected)
+    {
+        $this->affected = $affected;
+        return $this;
+    }
 }
