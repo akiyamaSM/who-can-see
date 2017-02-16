@@ -9,6 +9,10 @@
  * License: GPL2
  */
 
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
 require_once 'RoleManager.php';
 require_once 'editor/ButtonCreator.php';
 

@@ -8,16 +8,15 @@ class RoleManager
     const TYPE_UNSPECIFIED = 0;
     const TYPE_ONLY = 1;
     const TYPE_EXCEPT = 2;
-    const TYPE_ALL = 3;
-    const TYPE_NONE = 4;
 
     private static $VALIDKEYS = [
-      'only', 'except', 'all', 'none'
+      'only', 'except'
     ];
 
     private static $ROLES = [
       'visitor', 'subscriber', 'contributor', 'author', 'editor', 'administrator'
     ];
+
     /**
      * Get the operation
      *
@@ -29,11 +28,9 @@ class RoleManager
         if(count($attribute) == 0 || count($attribute) > 1)
         {
             return null;
-            //return [static::TYPE_UNSPECIFIED, null];
         }
         if(!static::isValidKey(array_keys($attribute)[0])){
             return null;
-            //return [static::TYPE_NOT_VALID, null];
         }
         $type = static::getType(array_keys($attribute)[0]);
         return static::getAffected($type, array_values($attribute)[0]);
@@ -55,14 +52,6 @@ class RoleManager
         if($key == 'except'){
             return static::TYPE_EXCEPT;
         }
-
-        if($key == 'all'){
-            return static::TYPE_ALL;
-        }
-
-        if($key == 'none'){
-            return static::TYPE_NONE;
-        }
     }
 
     /**
@@ -74,9 +63,6 @@ class RoleManager
      */
     public static function getAffected($type, $affected)
     {
-        if($type === static::TYPE_ALL || $type === static::TYPE_NONE){
-            return null;
-        }
         list($affectedArray, $selected)= [explode('|', $affected), []];
 
         $filter = FilterRepository::generate($type);
